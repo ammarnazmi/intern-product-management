@@ -1,4 +1,4 @@
-@extends('layouts.master') {{-- or @extends('master') if that’s your layout --}}
+@extends('layouts.master')
 
 @section('title', 'Edit Product')
 
