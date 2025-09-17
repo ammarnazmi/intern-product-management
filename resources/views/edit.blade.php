@@ -8,7 +8,7 @@
     <div class="card-body">
       <form action="{{ route('products.update', $product) }}" method="POST" novalidate>
         @csrf @method('PUT')
-        @include('products.partials._form', ['button' => 'Update'])
+        @include('products.edit', ['button' => 'Update'])
       </form>
     </div>
   </div>
