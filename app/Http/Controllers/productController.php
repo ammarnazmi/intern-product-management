@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProductController
 {
     /**
-     * List products.
+     * List products
      */
     public function index(Request $request)
     {
@@ -22,7 +22,7 @@ class ProductController
     }
 
     /**
-     * Show create form (reuse edit with a new instance).
+     * Show create form
      */
     public function create()
     {
@@ -30,7 +30,7 @@ class ProductController
     }
 
     /**
-     * Store product.
+     * Store product
      */
     public function store(ProductRequest $request)
     {
