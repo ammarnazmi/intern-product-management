@@ -16,11 +16,34 @@
 
     <form method="POST"
           action="{{ request()->is('*/create')
-                        ? route('products.subproducts.store', $product)
-                        : route('products.subproducts.update', [$product, $subproduct]) }}">
+                        ? route('subproduct.store', $product)
+                        : route('subproduct.update', [$product, $subproduct]) }}">
 
         @csrf
         @if (request()->is('*/edit')) @method('PUT') @endif
+
+        <div class="mb-3">
+            <label for="product_id" class="form-label">{{ __('Product') }}</label>
+
+            <select class="form-select @error('product_id') is-invalid @enderror"
+                    id="product_id" name="product_id">
+                <option value="">{{ __('Select Product') }}</option>
+
+                @foreach ($productsOptions as $id => $name)
+                    <option value="{{ $id }}"
+                        {{ (string) old('product_id', $subproduct->product_id ?? '') === (string) $id ? 'selected' : '' }}>
+                        {{ $name }}
+                    </option>
+                @endforeach
+            </select>
+
+                @error('product_id')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
 
         <div class="mb-3">
           <label for="name" class="form-label">{{ __('Name') }}</label>
@@ -49,7 +72,7 @@
         <button type="submit" class="btn btn-primary">
           {{ request()->is('*/create') ? __('Create') : __('Update') }}
         </button>
-        <a href="{{ route('products.subprodu', $product) }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
+        <a href="{{ route('subproducts.index', $product) }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
       </form>
 
     </div>

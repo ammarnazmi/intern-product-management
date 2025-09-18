@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class SubproductController
 {
     /**
-     * List subproducts for a product
+     * List subproduct for a product
      */
     public function index(Request $request, Product $product)
     {
@@ -23,16 +23,20 @@ class SubproductController
 
         return $request->wantsJson()
             ? $subproducts
-            : view('subproducts_index', compact('product', 'subproducts'));
+            : view('subproduct.index', compact('product', 'subproducts'));
     }
 
     /**
      * Show create form
      */
-    public function create(Product $product)
-    {
-        return $this->edit($product, new Subproduct(['product_id' => $product->id]));
-    }
+    public function create()
+{
+    $productsOptions = Product::orderBy('name')->pluck('name', 'id');
+    return view('subproduct.form', [
+        'subproduct' => new Subproduct(),
+        'productsOptions' => $productsOptions,
+    ]);
+}
 
     /**
      * Store a new subproduct.
@@ -44,17 +48,20 @@ class SubproductController
         $subproduct = Subproduct::create($data);
 
         return redirect()
-            ->route('products.subproducts.index', $product)
+            ->route('products.subproduct.index', $product)
             ->with('success', __('Subproduct :name created successfully.', ['name' => $subproduct->name]));
     }
 
     /**
      * show edit form
      */
-    public function edit(Product $product, Subproduct $subproduct)
-    {
-        return view('subproducts_form', compact('product', 'subproduct'));
-    }
+    public function edit(Subproduct $subproduct)
+{
+    $productsOptions = Product::orderBy('name')->pluck('name', 'id');
+    return view('subproduct.edit', compact('subproduct') + [
+        'productsOptions' => $productsOptions,
+    ]);
+}
 
     /**
      * update a subproduct form
@@ -64,7 +71,7 @@ class SubproductController
         $subproduct->update($request->validated());
 
         return redirect()
-            ->route('products.subproducts.index', $product)
+            ->route('products.subproduct.index', $product)
             ->with('success', __('Subproduct :name updated successfully.', ['name' => $subproduct->name]));
     }
 
@@ -76,7 +83,7 @@ class SubproductController
         $subproduct->delete();
 
         return redirect()
-            ->route('products.subproducts.index', $product)
+            ->route('products.subproduct.index', $product)
             ->with('success', __('Subproduct :name deleted successfully.', ['name' => $subproduct->name]));
     }
 }

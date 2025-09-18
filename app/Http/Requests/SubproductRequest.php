@@ -22,6 +22,7 @@ class SubproductRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'product_id' => ['required', 'exists:products,id'],
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'price'       => ['required', 'numeric', 'min:0'],

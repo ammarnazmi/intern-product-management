@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProductController
 {
     /**
-     * List products
+     * List product
      */
     public function index(Request $request)
     {
