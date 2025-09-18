@@ -10,45 +10,40 @@ use Illuminate\Http\Request;
 class SubproductController
 {
     /**
-     * List subproduct for a product
+     * List of subproduct
      */
-    public function index(Request $request, Product $product)
+    public function index(Request $request)
     {
-        $columns = ['id', 'product_id', 'name', 'description', 'price', 'created_at'];
-        $subproducts = Subproduct::query()
-            ->where('product_id', $product->id)
-            ->select($columns)
-            ->latest('id')
-            ->paginate(10);
+        $query = Subproduct::query();
+
+        $columns = ['id', 'product_id', 'name', 'description', 'price'];
+
+        $subproducts = Subproduct::with(['product:id,name'])->select(['id','product_id','name','description','price'])->latest('id')->paginate(10);
 
         return $request->wantsJson()
             ? $subproducts
-            : view('subproduct.index', compact('product', 'subproducts'));
+            : view('subproduct.index', compact('subproducts'));
     }
 
     /**
      * Show create form
      */
     public function create()
-{
-    $productsOptions = Product::orderBy('name')->pluck('name', 'id');
-    return view('subproduct.form', [
-        'subproduct' => new Subproduct(),
-        'productsOptions' => $productsOptions,
-    ]);
-}
+    {
+        return $this->edit(new Subproduct());
+    }
 
     /**
-     * Store a new subproduct.
+     * Store a new subproduct
      */
-    public function store(SubproductRequest $request, Product $product)
+    public function store(SubproductRequest $request)
     {
-        $data = $request->validated() + ['product_id' => $product->id];
+        $data = $request->validated();
 
         $subproduct = Subproduct::create($data);
 
         return redirect()
-            ->route('subproduct.index', $product)
+            ->route('subproducts.index')
             ->with('success', __('Subproduct :name created successfully.', ['name' => $subproduct->name]));
     }
 
@@ -56,34 +51,36 @@ class SubproductController
      * show edit form
      */
     public function edit(Subproduct $subproduct)
-{
-    $productsOptions = Product::orderBy('name')->pluck('name', 'id');
-    return view('subproduct.edit', compact('subproduct') + [
-        'productsOptions' => $productsOptions,
-    ]);
-}
+    {
+        $productsOptions = Product::orderBy('name')->pluck('name', 'id');
+        return view('subproduct.form', compact('subproduct', 'productsOptions'));
+    }
 
     /**
      * update a subproduct form
      */
-    public function update(SubproductRequest $request, Product $product, Subproduct $subproduct)
+    public function update(SubproductRequest $request,  Subproduct $subproduct)
     {
-        $subproduct->update($request->validated());
+        $data = $request->validated();
+
+        $subproduct->update($data);
 
         return redirect()
-            ->route('subproduct.index', $product)
+            ->route('subproducts.index')
             ->with('success', __('Subproduct :name updated successfully.', ['name' => $subproduct->name]));
     }
 
     /**
      * Delete a subproduct
      */
-    public function destroy(Product $product, Subproduct $subproduct)
+    public function destroy(Subproduct $subproduct)
     {
+        $name = $subproduct->name;
+
         $subproduct->delete();
 
         return redirect()
-            ->route('products.subproduct.index', $product)
+            ->route('subproducts.index')
             ->with('success', __('Subproduct :name deleted successfully.', ['name' => $subproduct->name]));
     }
 }
