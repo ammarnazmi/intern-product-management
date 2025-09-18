@@ -48,7 +48,7 @@ class SubproductController
         $subproduct = Subproduct::create($data);
 
         return redirect()
-            ->route('products.subproduct.index', $product)
+            ->route('subproduct.index', $product)
             ->with('success', __('Subproduct :name created successfully.', ['name' => $subproduct->name]));
     }
 
@@ -71,7 +71,7 @@ class SubproductController
         $subproduct->update($request->validated());
 
         return redirect()
-            ->route('products.subproduct.index', $product)
+            ->route('subproduct.index', $product)
             ->with('success', __('Subproduct :name updated successfully.', ['name' => $subproduct->name]));
     }
 

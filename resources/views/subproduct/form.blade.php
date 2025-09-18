@@ -5,7 +5,6 @@
     match (true) {
         request()->is('*/create') => __('add Subproduct'),
         request()->is('*/edit')   => __('update Subproduct'),
-        default                   => __('Subproduct'),
     }
 )
 
@@ -13,20 +12,17 @@
 <div class="col-12 col-lg-8">
   <div class="card">
     <div class="card-body">
-
     <form method="POST"
-          action="{{ request()->is('*/create')
-                        ? route('subproduct.store', $product)
-                        : route('subproduct.update', [$product, $subproduct]) }}">
-
+          action="{{ request()->is('subproduct.create') ? route('subproduct.store') : route('subproduct.update', $subproduct) }}">
         @csrf
-        @if (request()->is('*/edit')) @method('PUT') @endif
+        @if (!request()->routeIs('subproduct.create'))
+                @method('PUT')
+        @endif
 
         <div class="mb-3">
             <label for="product_id" class="form-label">{{ __('Product') }}</label>
 
-            <select class="form-select @error('product_id') is-invalid @enderror"
-                    id="product_id" name="product_id">
+            <select class="form-select @error('product_id') is-invalid @enderror" id="product_id" name="product_id">
                 <option value="">{{ __('Select Product') }}</option>
 
                 @foreach ($productsOptions as $id => $name)
@@ -43,7 +39,6 @@
                     </div>
                 @enderror
             </div>
-
 
         <div class="mb-3">
           <label for="name" class="form-label">{{ __('Name') }}</label>
