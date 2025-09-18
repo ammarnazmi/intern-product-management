@@ -18,7 +18,7 @@ class ProductController
 
         return $request->wantsJson()
             ? $products
-            : view('index', compact('products'));
+            : view('product.index', compact('products'));
     }
 
     /**
@@ -46,7 +46,7 @@ class ProductController
      */
     public function edit(Product $product)
     {
-        return view('form', compact('product'));
+        return view('product.form', compact('product'));
     }
 
     /**
