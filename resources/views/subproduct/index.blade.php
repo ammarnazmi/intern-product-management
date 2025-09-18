@@ -12,7 +12,7 @@
     <thead class="table-light">
       <tr>
         <th>Product Name</th>
-        <th>Name</th>
+        <th>Subproduct Name</th>
         <th>Description</th>
         <th class="text-end" style="width:140px;">Price (RM)</th>
         <th style="width:180px;">Actions</th>

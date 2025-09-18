@@ -32,7 +32,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="name" class="form-label">{{ __('Name') }}</label>
+          <label for="name" class="form-label">{{ __('Subproduct Name') }}</label>
           <input type="text" id="name" name="name"
                  class="form-control @error('name') is-invalid @enderror"
                  value="{{ old('name', $subproduct->name) }}" required maxlength="255">
