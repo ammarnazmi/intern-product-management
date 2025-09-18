@@ -11,7 +11,6 @@
   <table class="table table-bordered align-middle">
     <thead class="table-light">
       <tr>
-        <th style="width:80px;">#</th>
         <th>Product Name</th>
         <th>Name</th>
         <th>Description</th>
@@ -22,7 +21,6 @@
     <tbody>
       @forelse($subproducts as $sp)
         <tr>
-          <td>{{ ($subproducts->currentPage() - 1) * $subproducts->perPage() + $loop->iteration }}</td>
           <td>{{ $sp->product->name}}</td>
           <td>{{ $sp->name }}</td>
           <td class="text-wrap">{{ $sp->description }}</td>
@@ -38,7 +36,7 @@
         </tr>
       @empty
         <tr>
-          <td colspan="5">
+          <td colspan="4">
             <div class="alert alert-info mb-0">No subproducts yet. Click <strong>Add Subproduct</strong> to create one.</div>
           </td>
         </tr>
