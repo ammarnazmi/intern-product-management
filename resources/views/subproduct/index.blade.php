@@ -36,7 +36,7 @@
         </tr>
       @empty
         <tr>
-          <td colspan="4">
+          <td colspan="5">
             <div class="alert alert-info mb-0">No subproducts yet. Click <strong>Add Subproduct</strong> to create one.</div>
           </td>
         </tr>
