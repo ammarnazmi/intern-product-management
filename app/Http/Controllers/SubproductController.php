@@ -53,6 +53,7 @@ class SubproductController
     public function edit(Subproduct $subproduct)
     {
         $productsOptions = Product::orderBy('name')->pluck('name', 'id');
+
         return view('subproduct.form', compact('subproduct', 'productsOptions'));
     }
 
@@ -75,7 +76,6 @@ class SubproductController
      */
     public function destroy(Subproduct $subproduct)
     {
-
         $subproduct->delete();
 
         return redirect()
