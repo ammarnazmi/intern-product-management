@@ -11,20 +11,16 @@
   <table class="table table-bordered align-middle">
     <thead class="table-light">
       <tr>
-        <th style="width:60px;">ID</th>
         <th>Name</th>
         <th>Description</th>
-        <th class="text-end" style="width:140px;">Price (RM)</th>
         <th style="width:180px;">Actions</th>
       </tr>
     </thead>
     <tbody>
       @forelse($products as $p)
         <tr>
-          <td>{{ $p->id }}</td>
           <td>{{ $p->name }}</td>
           <td class="text-wrap">{{ $p->description }}</td>
-          <td class="text-end">{{ number_format($p->price, 2) }}</td>
           <td>
             <a href="{{ route('products.edit', $p) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
             <form action="{{ route('products.destroy', $p) }}" method="POST" class="d-inline">
@@ -36,7 +32,7 @@
         </tr>
       @empty
         <tr>
-          <td colspan="5">
+          <td colspan="4">
             <div class="alert alert-info mb-0">
               No products yet. Click Add Products to create.
             </div>

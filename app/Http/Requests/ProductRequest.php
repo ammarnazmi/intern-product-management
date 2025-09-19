@@ -24,7 +24,6 @@ class ProductRequest extends FormRequest
         return [
             'name'        => ['required', 'string', 'max:255', 'unique:products,name,' . $this->product?->id],
             'description' => ['nullable', 'string'],
-            'price'       => ['required', 'numeric', 'min:0'],
         ];
     }
 }

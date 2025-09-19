@@ -9,16 +9,17 @@ use Illuminate\Http\Request;
 class ProductController
 {
     /**
-     * List product
+     * List products
      */
     public function index(Request $request)
     {
-        $columns = ['id', 'name', 'description', 'price', 'created_at'];
+        $columns = ['id', 'name', 'description', 'created_at'];
+
         $products = Product::query()->select($columns)->latest('id')->paginate(10);
 
         return $request->wantsJson()
             ? $products
-            : view('index', compact('products'));
+            : view('product.index', compact('products'));
     }
 
     /**
@@ -46,7 +47,7 @@ class ProductController
      */
     public function edit(Product $product)
     {
-        return view('form', compact('product'));
+        return view('product.form', compact('product'));
     }
 
     /**
