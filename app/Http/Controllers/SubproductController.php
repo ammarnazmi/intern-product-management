@@ -75,7 +75,6 @@ class SubproductController
      */
     public function destroy(Subproduct $subproduct)
     {
-        $name = $subproduct->name;
 
         $subproduct->delete();
 
