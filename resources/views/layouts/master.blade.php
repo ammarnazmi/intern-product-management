@@ -21,7 +21,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}"
-             href="{{ route('products.index') }}">Item 1</a>
+             href="{{ route('products.index') }}">Product</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Item 2</a>
