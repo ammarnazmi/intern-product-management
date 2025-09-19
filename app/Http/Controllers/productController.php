@@ -13,7 +13,8 @@ class ProductController
      */
     public function index(Request $request)
     {
-        $columns = ['id', 'name', 'description', 'price', 'created_at'];
+        $columns = ['id', 'name', 'description', 'created_at'];
+
         $products = Product::query()->select($columns)->latest('id')->paginate(10);
 
         return $request->wantsJson()
