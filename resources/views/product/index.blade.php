@@ -28,10 +28,10 @@
         </tr>
         </template>
 
-        <template x-for="p in products" :key="p.id">
+        <template x-for="products for products" :key="product.id">
         <tr>
-            <td x-text="p.name"></td>
-            <td class="text-wrap" x-text="p.description"></td>
+            <td x-text="product.name"></td>
+            <td class="text-wrap" x-text="product.description"></td>
             <td>
             <a :href="`/products/${p.id}/edit`" class="btn btn-sm btn-outline-secondary">Edit</a>
             <form :action="`/products/${p.id}`" method="POST" class="d-inline">
