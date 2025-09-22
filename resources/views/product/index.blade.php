@@ -17,8 +17,10 @@
       </tr>
     </thead>
     <tbody>
+
         <template x-if="products.length === 0">
-            <td colspan="4">
+            <tr>
+            <td colspan="3">
             <div class="alert alert-info mb-0">
               No products yet. Click Add Products to create.
             </div>
@@ -26,14 +28,13 @@
         </tr>
         </template>
 
-        <template x-for="p for products" :key="p.id">
+        <template x-for="p in products" :key="p.id">
         <tr>
             <td x-text="p.name"></td>
             <td class="text-wrap" x-text="p.description"></td>
-        </td>
-            <a :href="`/products/${sp.id}/edit`" class="btn btn-sm btn-outline-secondary">Edit</a>
-
-            <form :action="`/products/${sp.id}`" method="POST" class="d-inline">
+            <td>
+            <a :href="`/products/${p.id}/edit`" class="btn btn-sm btn-outline-secondary">Edit</a>
+            <form :action="`/products/${p.id}`" method="POST" class="d-inline">
               @csrf
               @method('DELETE')
               <button class="btn btn-sm btn-outline-danger"
@@ -48,6 +49,7 @@
   </table>
 </div>
 @endsection
+
 @push('js')
     <script>
         function productList() {
