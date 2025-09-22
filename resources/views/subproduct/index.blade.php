@@ -19,10 +19,13 @@
       </tr>
     </thead>
     <tbody>
-        <template x-if="subproducts.length=== 0">
-        <tr>
-          <td colspan="5">
-            <div class="alert alert-info mb-0">No subproducts yet. Click <strong>Add Subproduct</strong> to create one.</div>
+
+        <template x-if="subproducts.length === 0">
+            <tr>
+            <td colspan="5">
+            <div class="alert alert-info mb-0">
+              No subproducts yet. Click Add Subroducts to create.
+            </div>
           </td>
         </tr>
         </template>
