@@ -7,7 +7,7 @@
   <a href="{{ route('products.create') }}" class="btn btn-primary">Add Products</a>
 </div>
 
-<div class="table-responsive">
+<div class="table-responsive" x-data="productList()">
   <table class="table table-bordered align-middle">
     <thead class="table-light">
       <tr>
@@ -16,12 +16,9 @@
         <th style="width:180px;">Actions</th>
       </tr>
     </thead>
-    <tbody x-data="{products: [
-        { id: 1, name: 'Product', description: 'Description of product' }
-        ]}">
-
+    <tbody>
         <template x-if="products.length === 0">
-             <td colspan="4">
+            <td colspan="4">
             <div class="alert alert-info mb-0">
               No products yet. Click Add Products to create.
             </div>
@@ -31,29 +28,32 @@
 
         <template x-for="p for products" :key="p.id">
         <tr>
-          <td x-text=p.name </td>
-          <td x-text="text-wrap">{{ $p->description }}</td>
-          <td>
-            <input x-model="{{ route('products.edit', $p) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
-            <input x-model="{{ route('products.destroy', $p) }}" method="POST" class="d-inline">
-              @csrf @method('DELETE')
-              <button @click="open = ! open">Delete</button>
+            <td x-text="p.name"></td>
+            <td class="text-wrap" x-text="p.description"></td>
+        </td>
+            <a :href="`/products/${sp.id}/edit`" class="btn btn-sm btn-outline-secondary">Edit</a>
+
+            <form :action="`/products/${sp.id}`" method="POST" class="d-inline">
+              @csrf
+              @method('DELETE')
+              <button class="btn btn-sm btn-outline-danger"
+                      onclick="return confirm('Delete this product?')">
+                Delete
+              </button>
             </form>
           </td>
         </tr>
-      @empty
-        <tr>
-        </template>
-    </tbody>
-      @forelse($products as $p)
-      @endforelse
+      </template>
     </tbody>
   </table>
 </div>
-
-@if(method_exists($products, 'links'))
-  <div class="mt-2">
-    {{ $products->links('pagination::bootstrap-5') }}
-  </div>
-@endif
 @endsection
+@push('js')
+    <script>
+        function productList() {
+            return {
+                products: @json($products),
+            }
+        }
+    </script>
+@endpush
