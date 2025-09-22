@@ -24,13 +24,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <template x-for="products for products" :key="product.id">
+                        <template x-for="product for products" :key="product.id">
                             <tr>
                                 <td x-text="product.name"></td>
                                 <td class="text-wrap" x-text="product.description"></td>
                                 <td>
-                                    <a :href="`/products/${p.id}/edit`" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                    <form :action="`/products/${p.id}`" method="POST" class="d-inline">
+                                    <a :href="`/products/${product.id}/edit`" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <form :action="`/products/${product.id}`" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-outline-danger"
