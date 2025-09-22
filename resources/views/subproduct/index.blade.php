@@ -29,7 +29,7 @@
                             <tr>
                                 <td x-text="subproduct.name"></td>
                                 <td class="text-wrap" x-text="subproduct.description"></td>
-                                <td class="text-end"> x-text="formatPrice(subproduct.price)"></td>
+                                <td class="text-end" x-text="(Number(subproduct.price) || 0).toFixed(2)"></td>
                                 <td>
                                     <a :href="`/subproducts/${subproduct.id}/edit`" class="btn btn-sm btn-outline-secondary">Edit</a>
                                     <form :action="`/subproducts/${subproduct.id}`" method="POST" class="d-inline">
