@@ -24,7 +24,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <template x-for="product for products" :key="product.id">
+                        <template x-for="(product, index) in products.data" :key="index">
                             <tr>
                                 <td x-text="product.name"></td>
                                 <td class="text-wrap" x-text="product.description"></td>

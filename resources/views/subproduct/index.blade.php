@@ -25,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <template x-for="subproducts for subproducts" :key="subproduct.id">
+                        <template x-for="(subproduct, index) in subproducts.data" :key="index">
                             <tr>
                                 <td x-text="subproduct.name"></td>
                                 <td class="text-wrap" x-text="subproduct.description"></td>
