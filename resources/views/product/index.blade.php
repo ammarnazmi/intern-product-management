@@ -16,28 +16,36 @@
         <th style="width:180px;">Actions</th>
       </tr>
     </thead>
-    <tbody>
-      @forelse($products as $p)
-        <tr>
-          <td>{{ $p->name }}</td>
-          <td class="text-wrap">{{ $p->description }}</td>
-          <td>
-            <a href="{{ route('products.edit', $p) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
-            <form action="{{ route('products.destroy', $p) }}" method="POST" class="d-inline">
-              @csrf @method('DELETE')
-              <button type="submit" class="btn btn-sm btn-outline-danger"
-                      onclick="return confirm('Delete this product?')">Delete</button>
-            </form>
-          </td>
-        </tr>
-      @empty
-        <tr>
-          <td colspan="4">
+    <tbody x-data="{products: [
+        { id: 1, name: 'Product', description: 'Description of product' }
+        ]}">
+
+        <template x-if="products.length === 0">
+             <td colspan="4">
             <div class="alert alert-info mb-0">
               No products yet. Click Add Products to create.
             </div>
           </td>
         </tr>
+        </template>
+
+        <template x-for="p for products" :key="p.id">
+        <tr>
+          <td x-text=p.name </td>
+          <td x-text="text-wrap">{{ $p->description }}</td>
+          <td>
+            <input x-model="{{ route('products.edit', $p) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+            <input x-model="{{ route('products.destroy', $p) }}" method="POST" class="d-inline">
+              @csrf @method('DELETE')
+              <button @click="open = ! open">Delete</button>
+            </form>
+          </td>
+        </tr>
+      @empty
+        <tr>
+        </template>
+    </tbody>
+      @forelse($products as $p)
       @endforelse
     </tbody>
   </table>
