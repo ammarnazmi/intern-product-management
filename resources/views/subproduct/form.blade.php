@@ -15,7 +15,6 @@
           @method('PUT')
         @endif
 
-        {{-- Product dropdown (from products table) --}}
         <div class="mb-3">
           <label for="product_id" class="form-label">{{ __('Product') }}</label>
           <select class="form-select @error('product_id') is-invalid @enderror"

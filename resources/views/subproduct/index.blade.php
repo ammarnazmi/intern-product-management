@@ -3,51 +3,58 @@
 @section('title', 'Subproducts')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <a href="{{ route('subproducts.create') }}" class="btn btn-primary">Add Subproduct</a>
-</div>
+    <div class="col-md-12" x-data="subproductList()">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <a class="btn btn-outline-dark" href="{{ route('subproducts.create') }}">
+                    <span class="fa-solid fa-plus"></span>
+                    {{ __('Add Subproducts') }}
+                </a>
+            </div>
+        </div>
 
-<div class="table-responsive">
-  <table class="table table-bordered align-middle">
-    <thead class="table-light">
-      <tr>
-        <th>Product Name</th>
-        <th>Subproduct Name</th>
-        <th>Description</th>
-        <th class="text-end" style="width:140px;">Price (RM)</th>
-        <th style="width:180px;">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      @forelse($subproducts as $sp)
-        <tr>
-          <td>{{ $sp->product->name}}</td>
-          <td>{{ $sp->name }}</td>
-          <td class="text-wrap">{{ $sp->description }}</td>
-          <td class="text-end">{{ number_format($sp->price, 2) }}</td>
-          <td>
-            <a href="{{ route('subproducts.edit', $sp) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
-            <form action="{{ route('subproducts.destroy', $sp) }}" method="POST" class="d-inline">
-              @csrf
-              @method('DELETE')
-              <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this subproduct?')">Delete</button>
-            </form>
-          </td>
-        </tr>
-      @empty
-        <tr>
-          <td colspan="5">
-            <div class="alert alert-info mb-0">No subproducts yet. Click <strong>Add Subproduct</strong> to create one.</div>
-          </td>
-        </tr>
-      @endforelse
-    </tbody>
-  </table>
-</div>
-
-@if(method_exists($subproducts, 'links'))
-  <div class="mt-2">
-    {{ $subproducts->links('pagination::bootstrap-5') }}
-  </div>
-@endif
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{ __('Name') }}</th>
+                            <th>{{ __('Description') }}</th>
+                            <th>{{ __('Price') }}</th>
+                            <th width="10%">{{ __('Actions') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="(subproduct, index) in subproducts.data" :key="index">
+                            <tr>
+                                <td x-text="subproduct.name"></td>
+                                <td class="text-wrap" x-text="subproduct.description"></td>
+                                <td class="text-end" x-text="(Number(subproduct.price) || 0).toFixed(2)"></td>
+                                <td>
+                                    <a :href="`/subproducts/${subproduct.id}/edit`" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <form :action="`/subproducts/${subproduct.id}`" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Delete this subproduct?')">Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 @endsection
+
+@push('js')
+    <script>
+        function subproductList() {
+            return {
+                subproducts: @json($subproducts),
+            }
+        }
+    </script>
+@endpush
