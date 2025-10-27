@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Resources\ProductResource;
 
 class ProductController
 {
@@ -17,9 +18,12 @@ class ProductController
 
         $products = Product::query()->select($columns)->latest('id')->paginate(10);
 
-        return $request->wantsJson()
-            ? $products
-            : view('product.index', compact('products'));
+        return ProductResource::collection($products);
+    }
+
+    public function show(Product $product)
+    {
+        return new ProductResource($product);
     }
 
     /**
@@ -37,9 +41,7 @@ class ProductController
     {
         $product = Product::create($request->validated());
 
-        return redirect()
-            ->route('products.index')
-            ->with('success', __('Product :name created successfully.', ['name' => $product->name]));
+        return new ProductResource($product);
     }
 
     /**
@@ -57,9 +59,7 @@ class ProductController
     {
         $product->update($request->validated());
 
-        return redirect()
-            ->route('products.index')
-            ->with('success', __('Product :name updated successfully.', ['name' => $product->name]));
+        return new ProductResource($product);
     }
 
     /**
@@ -69,8 +69,6 @@ class ProductController
     {
         $product->delete();
 
-        return redirect()
-            ->route('products.index')
-            ->with('success', __('Product :name deleted successfully.', ['name' => $product->name]));
+        return [];
     }
 }
